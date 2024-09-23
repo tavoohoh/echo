@@ -1,5 +1,6 @@
 import Foundation
 import Capacitor
+import KustomerChat
 
 /**
  * Please read the Capacitor iOS Plugin Development Guide
@@ -15,9 +16,50 @@ public class GsCapacitorKustomerPlugin: CAPPlugin, CAPBridgedPlugin {
     private let implementation = GsCapacitorKustomer()
 
     @objc func echo(_ call: CAPPluginCall) {
-        let value = call.getString("value") ?? ""
+        let value = call.getString("event") ?? ""
+
+        switch value {
+            case "kustomerSignIn":
+                handleKustomerSingIn(token: call.getString("jwtToken") ?? "")
+            case "kustomerSignOut":
+                handleKustomerSingOut()
+            case "kustomerOpenChat":
+                handleKustomerOpenChat()
+            default:
+                print("Invalid event: '\(value)'")
+        }
+
         call.resolve([
-            "value": implementation.echo(value)
+            "value": value
         ])
+    }
+
+    func handleKustomerSingIn(token: String) {
+        print("Kustomer sign in...")
+
+        Kustomer.logIn(jwt: token) { result in
+            switch result {
+                case .success:
+                    print("Kustomer sign in was successful")
+                case .failure(let error):
+                    print("Kustomer sign in error: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    func handleKustomerSingOut() {
+        print("Kustomer sign out...")
+
+        Kustomer.logOut({ error in
+            if error != nil {
+                print("Kustomer sign out error: \(error?.localizedDescription ?? "")")
+            }
+        })
+    }
+
+    func handleKustomerOpenChat() {
+        print("Kustomer show...")
+
+        Kustomer.show()
     }
 }

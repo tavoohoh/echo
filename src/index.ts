@@ -10,4 +10,5 @@ const GsCapacitorKustomer = registerPlugin<GsCapacitorKustomerPlugin>(
 );
 
 export * from './definitions';
+export * from './kustomer';
 export { GsCapacitorKustomer };

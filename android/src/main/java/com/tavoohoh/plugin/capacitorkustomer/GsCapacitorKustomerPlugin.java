@@ -18,5 +18,19 @@ public class GsCapacitorKustomerPlugin extends Plugin {
         JSObject ret = new JSObject();
         ret.put("value", implementation.echo(value));
         call.resolve(ret);
+
+        if (value.equals("kustomerOpenChat")) {
+            String email = call.getString("email");
+            String jwtToken = call.getString("jwtToken");
+            KustomerKt.open(email, jwtToken);
+        }
+
+        if (value.equals("kustomerSignOut")) {
+            KustomerKt.logout();
+        }
+
+        JSObject ret = new JSObject();
+        ret.put("value", value);
+        call.resolve(ret);
     }
 }
