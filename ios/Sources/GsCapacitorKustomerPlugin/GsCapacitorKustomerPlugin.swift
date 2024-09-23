@@ -1,11 +1,8 @@
+/**
 import Foundation
 import Capacitor
 import KustomerChat
 
-/**
- * Please read the Capacitor iOS Plugin Development Guide
- * here: https://capacitorjs.com/docs/plugins/ios
- */
 @objc(GsCapacitorKustomerPlugin)
 public class GsCapacitorKustomerPlugin: CAPPlugin, CAPBridgedPlugin {
     public let identifier = "GsCapacitorKustomerPlugin"
@@ -16,7 +13,9 @@ public class GsCapacitorKustomerPlugin: CAPPlugin, CAPBridgedPlugin {
     private let implementation = GsCapacitorKustomer()
 
     @objc func echo(_ call: CAPPluginCall) {
-        let value = call.getString("event") ?? ""
+        let value = call.getString("value") ?? ""
+
+        print(value)
 
         switch value {
             case "kustomerSignIn":
@@ -63,3 +62,4 @@ public class GsCapacitorKustomerPlugin: CAPPlugin, CAPBridgedPlugin {
         Kustomer.show()
     }
 }
+*/

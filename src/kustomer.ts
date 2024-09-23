@@ -1,5 +1,7 @@
 import type { Platform } from './definitions';
-import { GsCapacitorKustomer } from './web';
+// import { GsCapacitorKustomer } from './web';
+
+const platformOverride = 'web'
 
 /**
  * Private methods
@@ -62,18 +64,24 @@ const handleChatClose = () => {
  * Public methods
  */
 const init = (apiKey: string, brandId: string, platform: Platform): void => {
+  platform = platformOverride
+
   switch (platform) {
     case 'web':
       initWebSdk(apiKey, brandId)
       break
+    /*
     case 'ios':
       break
     case 'android':
       break
+    */
   }
 }
 
 const openChat = async (platform: Platform): Promise<void> => {
+  platform = platformOverride
+
   switch (platform) {
     case 'web':
       if (!window.Kustomer) {
@@ -83,6 +91,7 @@ const openChat = async (platform: Platform): Promise<void> => {
       window.Kustomer.open()
       break
 
+    /*
     case 'ios':
       await GsCapacitorKustomer.echo({
         value: JSON.stringify({
@@ -98,11 +107,14 @@ const openChat = async (platform: Platform): Promise<void> => {
         })
       })
       break
+    */
   }
 }
 
 const signIn = async (platform: Platform, jwtToken: string): Promise<void> => {
   try {
+    platform = platformOverride
+
     switch (platform) {
       case 'web':
         if (window.Kustomer) {
@@ -112,6 +124,7 @@ const signIn = async (platform: Platform, jwtToken: string): Promise<void> => {
         }
         break
 
+      /*
       case 'ios':
         await GsCapacitorKustomer.echo({
           value: JSON.stringify({ event: 'kustomerSignIn', jwtToken })
@@ -123,6 +136,7 @@ const signIn = async (platform: Platform, jwtToken: string): Promise<void> => {
           value: JSON.stringify({ event: 'kustomerSignIn', jwtToken })
         })
         break
+       */
     }
   } catch (e) {
     return
@@ -130,6 +144,8 @@ const signIn = async (platform: Platform, jwtToken: string): Promise<void> => {
 }
 
 const signOut = async (platform: Platform): Promise<void> => {
+  platform = platformOverride
+
   switch (platform) {
     case 'web':
       if (!window.Kustomer) {
@@ -142,6 +158,8 @@ const signOut = async (platform: Platform): Promise<void> => {
         }
       });
       break
+
+    /*
     case 'ios':
       await GsCapacitorKustomer.echo({
         value: JSON.stringify({ event: 'kustomerSignOut' }
@@ -152,6 +170,7 @@ const signOut = async (platform: Platform): Promise<void> => {
         value: JSON.stringify({ event: 'kustomerSignOut' })
       })
       break
+     */
   }
 }
 
